@@ -1,0 +1,89 @@
+package at.justacasualday.justACasualAPI;
+
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+
+public class YAMLConfig {
+    private final String filepath;
+    private final File file;
+    private FileConfiguration fileConfiguration;
+
+    public YAMLConfig(@NotNull String filepath) {
+        this.filepath = filepath;
+        file = new File(filepath);
+
+        init();
+    }
+
+    private void init()
+    {
+        if(!file.exists())
+        {
+            file.getParentFile().mkdirs();
+
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        fileConfiguration = YamlConfiguration.loadConfiguration(file);
+    }
+
+    public void saveConfig()
+    {
+        try {
+            fileConfiguration.save(file);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setValue(String path, Object value)
+    {
+        fileConfiguration.set(path, value);
+    }
+
+    public int getInt(String path)
+    {
+        return fileConfiguration.getInt(path);
+    }
+
+    public double getDouble(String path)
+    {
+        return fileConfiguration.getDouble(path);
+    }
+
+    public String getString(String path)
+    {
+        return fileConfiguration.getString(path);
+    }
+
+    public Object getObject(String path)
+    {
+        return fileConfiguration.get(path);
+    }
+
+    public boolean getBoolean(String path)
+    {
+        return fileConfiguration.getBoolean(path);
+    }
+
+    public ConfigurationSection getConfigSection(String path)
+    {
+        return fileConfiguration.getConfigurationSection(path);
+    }
+
+    public Collection<String> getSection(String path, @NotNull boolean deep)
+    {
+        return fileConfiguration.getConfigurationSection(path).getKeys(deep);
+    }
+
+}
