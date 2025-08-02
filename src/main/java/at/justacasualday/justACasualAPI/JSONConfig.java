@@ -58,6 +58,9 @@ public class JSONConfig<T> {
                 init();
             }
         }
+
+        objectList = loadFromFile();
+        if(objectList == null) objectList = new ArrayList<>();
     }
 
     private void init()
