@@ -6,7 +6,10 @@ import com.google.gson.reflect.TypeToken;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +18,11 @@ import java.util.List;
  * @param <T> ObjectType to store
  */
 public class JSONConfig<T> {
+    private final String filename;
     private final File file;
     private final Gson gson;
     private final Type type;
+    private final Plugin plugin;
     private List<T> objectList;
 
     /**
@@ -27,11 +32,13 @@ public class JSONConfig<T> {
      * @param clazz Class of the Object that will be stored
      */
     public JSONConfig(@NotNull File folder, @NotNull String filename, @NotNull Class<T> clazz) {
+        this.filename = filename;
         file = new File(folder, filename);
         gson = new GsonBuilder().setPrettyPrinting().create();
         type = TypeToken.getParameterized(List.class, clazz).getType();
+        plugin = null;
 
-        init();
+        Config.init(file, plugin, filename);
         objectList = loadFromFile();
         if(objectList == null) objectList = new ArrayList<>();
     }
@@ -43,39 +50,17 @@ public class JSONConfig<T> {
      * @param clazz Class of the Object that will be stored
      */
     public JSONConfig(@NotNull String filename, Plugin plugin, Class<T> clazz) {
+        this.filename = filename;
         file = new File(plugin.getDataFolder(), filename);
         gson = new GsonBuilder().setPrettyPrinting().create();
         type = TypeToken.getParameterized(List.class, clazz).getType();
+        this.plugin = plugin;
 
-        if(!file.exists())
-        {
-            file.getParentFile().mkdirs();
-
-            if(plugin.getResource(filename) != null)
-            {
-                plugin.saveResource(filename, false);
-            } else {
-                init();
-            }
-        }
-
+        Config.init(file, plugin, filename);
         objectList = loadFromFile();
         if(objectList == null) objectList = new ArrayList<>();
     }
 
-    private void init()
-    {
-        if(!file.exists())
-        {
-            file.getParentFile().mkdirs();
-
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
 
     private List<T> loadFromFile()
     {

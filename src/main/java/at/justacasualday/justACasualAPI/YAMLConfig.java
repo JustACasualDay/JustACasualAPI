@@ -32,7 +32,8 @@ public class YAMLConfig {
         this.filename = filename;
         plugin = null;
 
-        init();
+        Config.init(file, plugin, filename);
+        fileConfiguration = YamlConfiguration.loadConfiguration(file);
     }
 
     /**
@@ -46,35 +47,8 @@ public class YAMLConfig {
         this.filename = filename;
         this.plugin = plugin;
 
-        if(!file.exists())
-        {
-            file.getParentFile().mkdirs();
 
-            if(plugin.getResource(filename) != null)
-            {
-                plugin.saveResource(filename, false);
-            } else {
-                init();
-            }
-        }
-
-        fileConfiguration = YamlConfiguration.loadConfiguration(file);
-    }
-
-    private void init()
-    {
-        if(!file.exists())
-        {
-            file.getParentFile().mkdirs();
-
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-
+        Config.init(file, plugin, filename);
         fileConfiguration = YamlConfiguration.loadConfiguration(file);
     }
 
