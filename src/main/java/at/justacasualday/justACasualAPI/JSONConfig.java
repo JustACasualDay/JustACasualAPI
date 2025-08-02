@@ -16,7 +16,6 @@ import java.util.List;
  * @param <T> ObjectType to store
  */
 public class JSONConfig<T> {
-    private final String filepath;
     private final File file;
     private final Gson gson;
     private final Type type;
@@ -29,7 +28,6 @@ public class JSONConfig<T> {
      * @param clazz Class of the Object that will be stored
      */
     public JSONConfig(@NotNull File folder, @NotNull String filename, @NotNull Class<T> clazz) {
-        this.filepath = folder.getAbsolutePath() + "/" + filename;
         file = new File(folder, filename);
         gson = new GsonBuilder().setPrettyPrinting().create();
         type = TypeToken.getParameterized(List.class, clazz).getType();

@@ -1,8 +1,10 @@
 package at.justacasualday.justACasualAPI;
 
+import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -14,8 +16,10 @@ import java.util.Collection;
  */
 public class YAMLConfig {
     private final String filepath;
+    private final String filename;
     private final File file;
     private FileConfiguration fileConfiguration;
+    private final Plugin plugin;
 
     /**
      * Creates a new Instance of YAMLConfig
@@ -25,8 +29,32 @@ public class YAMLConfig {
     public YAMLConfig(@NotNull File folder, @NotNull String filename) {
         this.filepath = folder.getAbsolutePath() + "/" + filename;
         file = new File(folder, filename);
+        this.filename = filename;
+        plugin = null;
 
         init();
+    }
+
+    /**
+     * Constructor for new Instance using a Plugin resource
+     * @param filename name of the Resource
+     * @param plugin an Instance of the Plugin
+     */
+    public YAMLConfig(@NotNull String filename, Plugin plugin) {
+        this.filepath = plugin.getDataFolder() + "/" + filename;
+        file = new File(plugin.getDataFolder(), filename);
+        this.filename = filename;
+        this.plugin = plugin;
+
+        if(!file.exists())
+        {
+            file.getParentFile().mkdirs();
+
+            if(plugin.getResource(filename) != null)
+            {
+                plugin.saveResource(filename, false);
+            }
+        }
     }
 
     private void init()
@@ -41,6 +69,7 @@ public class YAMLConfig {
                 throw new RuntimeException(e);
             }
         }
+
 
         fileConfiguration = YamlConfiguration.loadConfiguration(file);
     }
@@ -58,13 +87,53 @@ public class YAMLConfig {
     }
 
     /**
+     * Clears the current Config
+     */
+    public void clearConfig()
+    {
+        if(plugin == null)
+        {
+            if(file.delete())
+            {
+                try {
+                    file.createNewFile();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        } else {
+            plugin.saveResource(filename, true);
+        }
+    }
+
+    /**
+     * @param path path to the Location
+     * @return the requested Location
+     */
+    public Location getLocation(String path)
+    {
+        return fileConfiguration.getLocation(path);
+    }
+
+    /**
      * Stores a given Object at the filepath
-     * @param path the path to store the data
-     * @param value the actual data
+     * @param path path to store the data
+     * @param value the data
      */
     public void setValue(@NotNull String path, Object value)
     {
         fileConfiguration.set(path, value);
+    }
+
+    /**
+     * Gets an  Object from the fileConfiguration
+     * ONLY USE WHEN ABSOLUTELY NECESSARY
+     * @param path path to the data
+     * @return the requested Object
+     */
+    public Object getValue(@NotNull String path)
+    {
+        return fileConfiguration.get(path);
     }
 
     public int getInt(String path)
