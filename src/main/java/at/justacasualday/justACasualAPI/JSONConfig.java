@@ -24,12 +24,13 @@ public class JSONConfig<T> {
 
     /**
      * Initializes a new JSONConfig
-     * @param filepath full absolute path to the file
+     * @param folder path to the folder
+     * @param filename the name of the file
      * @param clazz Class of the Object that will be stored
      */
-    public JSONConfig(@NotNull String filepath, @NotNull Class<T> clazz) {
-        this.filepath = filepath;
-        file = new File(filepath);
+    public JSONConfig(@NotNull File folder, @NotNull String filename, @NotNull Class<T> clazz) {
+        this.filepath = folder.getAbsolutePath() + "/" + filename;
+        file = new File(folder, filename);
         gson = new GsonBuilder().setPrettyPrinting().create();
         type = TypeToken.getParameterized(List.class, clazz).getType();
 

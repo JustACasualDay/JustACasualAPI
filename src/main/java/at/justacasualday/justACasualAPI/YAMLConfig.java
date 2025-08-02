@@ -19,11 +19,12 @@ public class YAMLConfig {
 
     /**
      * Creates a new Instance of YAMLConfig
-     * @param filepath full absolute path to the file
+     * @param folder path to the folder
+     * @param filename the name of the file
      */
-    public YAMLConfig(@NotNull String filepath) {
-        this.filepath = filepath;
-        file = new File(filepath);
+    public YAMLConfig(@NotNull File folder, @NotNull String filename) {
+        this.filepath = folder.getAbsolutePath() + "/" + filename;
+        file = new File(folder, filename);
 
         init();
     }
