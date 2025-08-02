@@ -11,14 +11,22 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
-
+/**
+ * Creates a JSON Config using Gson
+ * @param <T> ObjectType to store
+ */
 public class JSONConfig<T> {
     private final String filepath;
     private final File file;
     private final Gson gson;
     private final Type type;
-    private final List<T> objectList;
+    private List<T> objectList;
 
+    /**
+     * Initializes a new JSONConfig
+     * @param filepath full absolute path to the file
+     * @param clazz Class of the Object that will be stored
+     */
     public JSONConfig(@NotNull String filepath, @NotNull Class<T> clazz) {
         this.filepath = filepath;
         file = new File(filepath);
@@ -55,6 +63,10 @@ public class JSONConfig<T> {
         }
     }
 
+    /**
+     * Saves the current list to file
+     * @return returns if saving was successful
+     */
     public boolean saveToFile()
     {
         try {
@@ -67,6 +79,10 @@ public class JSONConfig<T> {
         }
     }
 
+    /**
+     * returns the stored Objects
+     * @return the object list
+     */
     public List<T> getObjectList() {
         return objectList;
     }

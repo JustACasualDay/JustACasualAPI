@@ -9,11 +9,18 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 
+/**
+ * Creates a YAML Config for storing different kinds of data
+ */
 public class YAMLConfig {
     private final String filepath;
     private final File file;
     private FileConfiguration fileConfiguration;
 
+    /**
+     * Creates a new Instance of YAMLConfig
+     * @param filepath full absolute path to the file
+     */
     public YAMLConfig(@NotNull String filepath) {
         this.filepath = filepath;
         file = new File(filepath);
@@ -37,6 +44,9 @@ public class YAMLConfig {
         fileConfiguration = YamlConfiguration.loadConfiguration(file);
     }
 
+    /**
+     * saves the fileConfiguration to file
+     */
     public void saveConfig()
     {
         try {
@@ -46,7 +56,12 @@ public class YAMLConfig {
         }
     }
 
-    public void setValue(String path, Object value)
+    /**
+     * Stores a given Object at the filepath
+     * @param path the path to store the data
+     * @param value the actual data
+     */
+    public void setValue(@NotNull String path, Object value)
     {
         fileConfiguration.set(path, value);
     }

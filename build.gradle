@@ -45,6 +45,11 @@ tasks.withType(JavaCompile).configureEach {
     }
 }
 
+tasks.withType(Javadoc) {
+    failOnError = false // This disables build failure on Javadoc warnings
+    options.addStringOption('Xdoclint:none', '-quiet') // Disables strict doc checks
+}
+
 processResources {
     def props = [version: version]
     inputs.properties props
