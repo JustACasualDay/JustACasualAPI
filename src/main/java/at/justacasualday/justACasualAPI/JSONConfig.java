@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 /**
  * Creates a JSON Config using Gson
@@ -32,6 +33,7 @@ public class JSONConfig<T> {
 
         init();
         objectList = loadFromFile();
+        if(objectList == null) objectList = new ArrayList<>();
     }
 
     /**
