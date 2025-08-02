@@ -57,6 +57,8 @@ public class YAMLConfig {
                 init();
             }
         }
+
+        fileConfiguration = YamlConfiguration.loadConfiguration(file);
     }
 
     private void init()
