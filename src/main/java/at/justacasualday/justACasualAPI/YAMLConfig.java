@@ -53,6 +53,8 @@ public class YAMLConfig {
             if(plugin.getResource(filename) != null)
             {
                 plugin.saveResource(filename, false);
+            } else {
+                init();
             }
         }
     }

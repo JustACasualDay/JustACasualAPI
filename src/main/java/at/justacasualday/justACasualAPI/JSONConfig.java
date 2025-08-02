@@ -3,12 +3,10 @@ package at.justacasualday.justACasualAPI;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.util.List;
 /**
@@ -34,6 +32,30 @@ public class JSONConfig<T> {
 
         init();
         objectList = loadFromFile();
+    }
+
+    /**
+     * Initializes a new JSONConfig
+     * @param filename the name of the file
+     * @param plugin an instance of the plugin
+     * @param clazz Class of the Object that will be stored
+     */
+    public JSONConfig(@NotNull String filename, Plugin plugin, Class<T> clazz) {
+        file = new File(plugin.getDataFolder(), filename);
+        gson = new GsonBuilder().setPrettyPrinting().create();
+        type = TypeToken.getParameterized(List.class, clazz).getType();
+
+        if(!file.exists())
+        {
+            file.getParentFile().mkdirs();
+
+            if(plugin.getResource(filename) != null)
+            {
+                plugin.saveResource(filename, false);
+            } else {
+                init();
+            }
+        }
     }
 
     private void init()
