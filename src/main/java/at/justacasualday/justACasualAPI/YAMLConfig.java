@@ -10,6 +10,8 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Creates a YAML Config for storing different kinds of data
@@ -147,6 +149,26 @@ public class YAMLConfig {
     public Collection<String> getSection(String path, @NotNull boolean deep)
     {
         return fileConfiguration.getConfigurationSection(path).getKeys(deep);
+    }
+
+    /**
+     * Gets a Map of Key/Value <String, String>
+     * @param path path to the Parent Key
+     * @return the map
+     */
+    public Map<String, String> getKeyValueMap(String path)
+    {
+        Map<String, String> map = new HashMap<>();
+
+        for(String string : getSection(path, false))
+        {
+            String filename = getString("configs." + string);
+            if(filename != null) {
+                map.put(string, filename);
+            }
+        }
+
+        return map;
     }
 
 }
