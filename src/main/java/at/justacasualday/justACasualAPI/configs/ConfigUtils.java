@@ -1,11 +1,11 @@
-package at.justacasualday.justACasualAPI;
+package at.justacasualday.justACasualAPI.configs;
 
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
 
-abstract class Config {
+abstract class ConfigUtils {
     public static void init(File file, Plugin plugin, String filename)
     {
         if(!file.exists())

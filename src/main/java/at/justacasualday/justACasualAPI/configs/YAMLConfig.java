@@ -1,4 +1,4 @@
-package at.justacasualday.justACasualAPI;
+package at.justacasualday.justACasualAPI.configs;
 
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
@@ -26,7 +26,7 @@ public class YAMLConfig {
     /**
      * Creates a new Instance of YAMLConfig
      * @param folder path to the folder
-     * @param filename the name of the file
+     * @param filename name of the file
      */
     public YAMLConfig(@NotNull File folder, @NotNull String filename) {
         this.filepath = folder.getAbsolutePath() + "/" + filename;
@@ -34,14 +34,14 @@ public class YAMLConfig {
         this.filename = filename;
         plugin = null;
 
-        Config.init(file, plugin, filename);
+        ConfigUtils.init(file, plugin, filename);
         fileConfiguration = YamlConfiguration.loadConfiguration(file);
     }
 
     /**
      * Constructor for new Instance using a Plugin resource
      * @param filename name of the Resource
-     * @param plugin an Instance of the Plugin
+     * @param plugin Instance of the Plugin
      */
     public YAMLConfig(@NotNull String filename, Plugin plugin) {
         this.filepath = plugin.getDataFolder() + "/" + filename;
@@ -50,7 +50,7 @@ public class YAMLConfig {
         this.plugin = plugin;
 
 
-        Config.init(file, plugin, filename);
+        ConfigUtils.init(file, plugin, filename);
         fileConfiguration = YamlConfiguration.loadConfiguration(file);
     }
 
@@ -87,8 +87,8 @@ public class YAMLConfig {
     }
 
     /**
-     * @param path path to the Location
-     * @return the requested Location
+     * @param path of Location
+     * @return requested Location
      */
     public Location getLocation(String path)
     {
@@ -96,8 +96,8 @@ public class YAMLConfig {
     }
 
     /**
-     * Stores a given Object at the filepath
-     * @param path path to store the data
+     * Stores a given Object at the path
+     * @param path to store the data
      * @param value the data
      */
     public void setValue(@NotNull String path, Object value)
@@ -108,8 +108,8 @@ public class YAMLConfig {
     /**
      * Gets an  Object from the fileConfiguration
      * ONLY USE WHEN ABSOLUTELY NECESSARY
-     * @param path path to the data
-     * @return the requested Object
+     * @param path to the data
+     * @return requested Object
      */
     public Object getValue(@NotNull String path)
     {
@@ -153,16 +153,17 @@ public class YAMLConfig {
 
     /**
      * Gets a Map of Key/Value <String, String>
-     * @param path path to the Parent Key
-     * @return the map
+     * @param parent of the Section
+     * @param path to the Parent Key
+     * @return Map of Key and Value
      */
-    public Map<String, String> getKeyValueMap(String path)
+    public Map<String, String> getKeyValueMap(String parent, String path)
     {
         Map<String, String> map = new HashMap<>();
 
         for(String string : getSection(path, false))
         {
-            String filename = getString("configs." + string);
+            String filename = getString(parent + "." + string);
             if(filename != null) {
                 map.put(string, filename);
             }

@@ -1,7 +1,6 @@
-package at.justacasualday.justACasualAPI;
+package at.justacasualday.justACasualAPI.items;
 
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
