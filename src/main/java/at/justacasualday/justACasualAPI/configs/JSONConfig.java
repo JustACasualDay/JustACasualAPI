@@ -1,4 +1,4 @@
-package at.justacasualday.justACasualAPI;
+package at.justacasualday.justACasualAPI.configs;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -28,7 +28,7 @@ public class JSONConfig<T> {
     /**
      * Initializes a new JSONConfig
      * @param folder path to the folder
-     * @param filename the name of the file
+     * @param filename name of the file
      * @param clazz Class of the Object that will be stored
      */
     public JSONConfig(@NotNull File folder, @NotNull String filename, @NotNull Class<T> clazz) {
@@ -38,14 +38,14 @@ public class JSONConfig<T> {
         type = TypeToken.getParameterized(List.class, clazz).getType();
         plugin = null;
 
-        Config.init(file, plugin, filename);
+        ConfigUtils.init(file, null, filename);
         objectList = loadFromFile();
         if(objectList == null) objectList = new ArrayList<>();
     }
 
     /**
      * Initializes a new JSONConfig
-     * @param filename the name of the file
+     * @param filename name of the file
      * @param plugin an instance of the plugin
      * @param clazz Class of the Object that will be stored
      */
@@ -56,7 +56,7 @@ public class JSONConfig<T> {
         type = TypeToken.getParameterized(List.class, clazz).getType();
         this.plugin = plugin;
 
-        Config.init(file, plugin, filename);
+        ConfigUtils.init(file, plugin, filename);
         objectList = loadFromFile();
         if(objectList == null) objectList = new ArrayList<>();
     }
@@ -76,7 +76,7 @@ public class JSONConfig<T> {
 
     /**
      * Saves the current list to file
-     * @return returns if saving was successful
+     * @return saving successful
      */
     public boolean saveToFile()
     {
@@ -91,8 +91,8 @@ public class JSONConfig<T> {
     }
 
     /**
-     * returns the stored Objects
-     * @return the object list
+     * Returns the stored Objects
+     * @return Object List
      */
     public List<T> getObjectList() {
         return objectList;
