@@ -39,7 +39,7 @@ public class JSONConfig<T> {
         plugin = null;
 
         ConfigUtils.init(file, null, filename);
-        objectList = loadFromFile();
+        loadFromFile();
         if(objectList == null) objectList = new ArrayList<>();
     }
 
@@ -57,18 +57,18 @@ public class JSONConfig<T> {
         this.plugin = plugin;
 
         ConfigUtils.init(file, plugin, filename);
-        objectList = loadFromFile();
+        loadFromFile();
+
         if(objectList == null) objectList = new ArrayList<>();
     }
 
-
-    private List<T> loadFromFile()
+    public void loadFromFile()
     {
         try {
             FileReader reader = new FileReader(file);
             List<T> list = gson.fromJson(reader, type);
             reader.close();
-            return list;
+            objectList = list;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
