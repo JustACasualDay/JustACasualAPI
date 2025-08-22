@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -153,17 +154,18 @@ public class YAMLConfig {
 
     /**
      * Gets a Map of Key/Value {@code <String, String>}
-     * @param parent of the Section
      * @param path to the Parent Key
      * @return Map of Key and Value
      */
-    public Map<String, String> getKeyValueMap(String parent, String path)
+    public Map<String, String> getKeyValueMap(String path, List<String> ignore)
     {
         Map<String, String> map = new HashMap<>();
 
         for(String string : getSection(path, false))
         {
-            String filename = getString(parent + "." + string);
+            if(ignore != null && ignore.contains(string)) continue;
+
+            String filename = getString(path + "." + string);
             if(filename != null) {
                 map.put(string, filename);
             }
