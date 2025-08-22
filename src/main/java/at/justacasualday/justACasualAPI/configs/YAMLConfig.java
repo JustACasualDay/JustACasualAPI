@@ -153,17 +153,16 @@ public class YAMLConfig {
 
     /**
      * Gets a Map of Key/Value {@code <String, String>}
-     * @param parent of the Section
      * @param path to the Parent Key
      * @return Map of Key and Value
      */
-    public Map<String, String> getKeyValueMap(String parent, String path)
+    public Map<String, String> getKeyValueMap(String path)
     {
         Map<String, String> map = new HashMap<>();
 
         for(String string : getSection(path, false))
         {
-            String filename = getString(parent + "." + string);
+            String filename = getString(path + "." + string);
             if(filename != null) {
                 map.put(string, filename);
             }
