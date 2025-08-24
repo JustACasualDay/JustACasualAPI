@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id("xyz.jpenilla.run-paper") version "2.3.1"
+    id "io.github.patrick.remapper" version "1.4.2"
 }
 
 group = 'at.justacasualday'
@@ -32,6 +33,10 @@ tasks {
         // Your plugin's jar (or shadowJar if present) will be used automatically.
         minecraftVersion("1.21")
     }
+
+    remap {
+        version.set("1.21.8")
+    }
 }
 
 def targetJavaVersion = 21
@@ -48,6 +53,10 @@ java {
             }
         }
     }
+}
+
+tasks.build {
+    dependsOn remap
 }
 
 tasks.withType(JavaCompile).configureEach {
