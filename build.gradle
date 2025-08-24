@@ -60,6 +60,8 @@ tasks.build {
 }
 
 tasks.jar {
+    archiveBaseName.set('JustACasualAPI')
+    archiveVersion.set('1.0') // or match your tag: '1.0.11'
     dependsOn remap
 }
 
