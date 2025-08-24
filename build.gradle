@@ -43,7 +43,7 @@ java {
         toolchain {
             languageVersion = JavaLanguageVersion.of(targetJavaVersion)
             vendor = JvmVendorSpec.ADOPTOPENJDK
-            install {
+            init {
                 repositories { mavenCentral() }
             }
         }
