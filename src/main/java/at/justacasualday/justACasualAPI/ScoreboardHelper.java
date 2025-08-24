@@ -26,7 +26,9 @@ public abstract class ScoreboardHelper {
         Objective objective = scoreboard.registerNewObjective(name, Criteria.DUMMY, title);
         objective.setDisplaySlot(slot);
 
-        ((CraftScoreboard) scoreboard).getHandle().getObjective(name).setNumberFormat(new BlankFormat());
+        if(blankNumberFormat) {
+            ((CraftScoreboard) scoreboard).getHandle().getObjective(name).setNumberFormat(BlankFormat.INSTANCE);
+        }
 
         int scoreNumber = text.size();
 
@@ -48,7 +50,9 @@ public abstract class ScoreboardHelper {
     public static void addObjective(Scoreboard scoreboard, String name, String title, List<String> text, boolean blankNumberFormat) {
         Objective objective = scoreboard.registerNewObjective(name, Criteria.DUMMY, title);
 
-        ((CraftScoreboard) scoreboard).getHandle().getObjective(name).setNumberFormat(new BlankFormat());
+        if(blankNumberFormat) {
+            ((CraftScoreboard) scoreboard).getHandle().getObjective(name).setNumberFormat(BlankFormat.INSTANCE);
+        }
 
         int scoreNumber = text.size();
 
