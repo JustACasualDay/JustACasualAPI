@@ -59,6 +59,10 @@ tasks.build {
     dependsOn remap
 }
 
+tasks.jar {
+    dependsOn remap
+}
+
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 
