@@ -1,7 +1,6 @@
 plugins {
     id 'java'
     id("xyz.jpenilla.run-paper") version "2.3.1"
-    id "io.github.patrick.remapper" version "1.4.2"
 }
 
 group = 'at.justacasualday'
@@ -23,7 +22,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot:1.21.8-R0.1-SNAPSHOT:remapped-mojang")
+    compileOnly("org.spigotmc:spigot:1.21.8-R0.1-SNAPSHOT")
 }
 
 tasks {
@@ -32,10 +31,6 @@ tasks {
         // This is the only required configuration besides applying the plugin.
         // Your plugin's jar (or shadowJar if present) will be used automatically.
         minecraftVersion("1.21")
-    }
-
-    remap {
-        version.set("1.21.8")
     }
 }
 
@@ -53,16 +48,6 @@ java {
             }
         }
     }
-}
-
-tasks.build {
-    //dependsOn remap
-}
-
-tasks.jar {
-    archiveBaseName.set('JustACasualAPI')
-    archiveVersion.set('1.0') // or match your tag: '1.0.11'
-    //dependsOn remap
 }
 
 tasks.withType(JavaCompile).configureEach {
