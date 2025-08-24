@@ -12,6 +12,12 @@ repositories {
     maven {
         name = "spigotmc-repo"
         url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+
+    }
+    maven {
+        name = "private-server-repo"
+        url = uri(findProperty("PRIVATE_MAVEN_SERVER") ?: System.getenv("PRIVATE_MAVEN_SERVER"))
+        allowInsecureProtocol = true
     }
 }
 
