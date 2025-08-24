@@ -56,13 +56,13 @@ java {
 }
 
 tasks.build {
-    dependsOn remap
+    //dependsOn remap
 }
 
 tasks.jar {
     archiveBaseName.set('JustACasualAPI')
     archiveVersion.set('1.0') // or match your tag: '1.0.11'
-    dependsOn remap
+    //dependsOn remap
 }
 
 tasks.withType(JavaCompile).configureEach {
