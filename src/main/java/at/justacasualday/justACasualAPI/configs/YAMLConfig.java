@@ -5,7 +5,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +28,7 @@ public class YAMLConfig {
      * @param folder path to the folder
      * @param filename name of the file
      */
-    public YAMLConfig(@NotNull File folder, @NotNull String filename) {
+    public YAMLConfig(File folder, String filename) {
         this.filepath = folder.getAbsolutePath() + "/" + filename;
         file = new File(folder, filename);
         this.filename = filename;
@@ -44,7 +43,7 @@ public class YAMLConfig {
      * @param filename name of the Resource
      * @param plugin Instance of the Plugin
      */
-    public YAMLConfig(@NotNull String filename, Plugin plugin) {
+    public YAMLConfig(String filename, Plugin plugin) {
         this.filepath = plugin.getDataFolder() + "/" + filename;
         file = new File(plugin.getDataFolder(), filename);
         this.filename = filename;
@@ -101,7 +100,7 @@ public class YAMLConfig {
      * @param path to store the data
      * @param value the data
      */
-    public void setValue(@NotNull String path, Object value)
+    public void setValue(String path, Object value)
     {
         fileConfiguration.set(path, value);
     }
@@ -112,7 +111,7 @@ public class YAMLConfig {
      * @param path to the data
      * @return requested Object
      */
-    public Object getValue(@NotNull String path)
+    public Object getValue(String path)
     {
         return fileConfiguration.get(path);
     }
@@ -147,7 +146,7 @@ public class YAMLConfig {
         return fileConfiguration.getConfigurationSection(path);
     }
 
-    public Collection<String> getSection(String path, @NotNull boolean deep)
+    public Collection<String> getSection(String path, boolean deep)
     {
         return fileConfiguration.getConfigurationSection(path).getKeys(deep);
     }

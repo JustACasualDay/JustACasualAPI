@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import org.bukkit.plugin.Plugin;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileReader;
@@ -31,7 +30,7 @@ public class JSONConfig<T> {
      * @param filename name of the file
      * @param clazz Class of the Object that will be stored
      */
-    public JSONConfig(@NotNull File folder, @NotNull String filename, @NotNull Class<T> clazz) {
+    public JSONConfig(File folder, String filename, Class<T> clazz) {
         this.filename = filename;
         file = new File(folder, filename);
         gson = new GsonBuilder().setPrettyPrinting().create();
@@ -49,7 +48,7 @@ public class JSONConfig<T> {
      * @param plugin an instance of the plugin
      * @param clazz Class of the Object that will be stored
      */
-    public JSONConfig(@NotNull String filename, Plugin plugin, Class<T> clazz) {
+    public JSONConfig(String filename, Plugin plugin, Class<T> clazz) {
         this.filename = filename;
         file = new File(plugin.getDataFolder(), filename);
         gson = new GsonBuilder().setPrettyPrinting().create();

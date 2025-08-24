@@ -1,7 +1,12 @@
 package at.justacasualday.justACasualAPI;
 
+import net.minecraft.network.chat.numbers.BlankFormat;
 import org.bukkit.Bukkit;
-import org.bukkit.scoreboard.*;
+import org.bukkit.craftbukkit.v1_21_R5.scoreboard.CraftScoreboard;
+import org.bukkit.scoreboard.Criteria;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.List;
 
@@ -15,11 +20,13 @@ public abstract class ScoreboardHelper {
      * @param text text to display
      * @return finished Scoreboard
      */
-    public static Scoreboard createScoreboard(String name, String title, DisplaySlot slot, List<String> text) {
+    public static Scoreboard createScoreboard(String name, String title, DisplaySlot slot, List<String> text, boolean blankNumberFormat) {
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
 
         Objective objective = scoreboard.registerNewObjective(name, Criteria.DUMMY, title);
         objective.setDisplaySlot(slot);
+
+        ((CraftScoreboard) scoreboard).getHandle().getObjective(name).setNumberFormat(new BlankFormat());
 
         int scoreNumber = text.size();
 
@@ -38,8 +45,10 @@ public abstract class ScoreboardHelper {
      * @param title displayed title
      * @param text text to display
      */
-    public static void addObjective(Scoreboard scoreboard, String name, String title, List<String> text) {
+    public static void addObjective(Scoreboard scoreboard, String name, String title, List<String> text, boolean blankNumberFormat) {
         Objective objective = scoreboard.registerNewObjective(name, Criteria.DUMMY, title);
+
+        ((CraftScoreboard) scoreboard).getHandle().getObjective(name).setNumberFormat(new BlankFormat());
 
         int scoreNumber = text.size();
 
