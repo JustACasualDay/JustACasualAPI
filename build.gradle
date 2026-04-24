@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'at.justacasualday'
-version = '1.0-SNAPSHOT'
+version = '26.1.2-SNAPSHOT'
 
 ext {
     nexusUrl = env.fetch("NEXUS_URL")
@@ -14,7 +14,7 @@ ext {
 }
 
 repositories {
-    mavenLocal();
+    mavenLocal()
     mavenCentral()
     maven {
         name = "spigotmc-repo"
@@ -23,10 +23,10 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot:1.21.8-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot:26.1.2-R0.1-SNAPSHOT")
 }
 
-def targetJavaVersion = 21
+def targetJavaVersion = 25
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
     sourceCompatibility = javaVersion
@@ -93,7 +93,6 @@ publishing {
             credentials {
                 username = env.fetch("NEXUS_USERNAME")
                 password = env.fetch("NEXUS_PASSWORD")
-
             }
         }
     }
