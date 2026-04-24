@@ -2,7 +2,7 @@ package at.justacasualday.justACasualAPI;
 
 import net.minecraft.network.chat.numbers.BlankFormat;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_21_R5.scoreboard.CraftScoreboard;
+import org.bukkit.craftbukkit.scoreboard.CraftScoreboard;
 import org.bukkit.scoreboard.Criteria;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -27,7 +27,7 @@ public abstract class ScoreboardHelper {
         objective.setDisplaySlot(slot);
 
         if(blankNumberFormat) {
-            ((CraftScoreboard)scoreboard).getHandle().a(name).b(BlankFormat.a);
+            ((CraftScoreboard)scoreboard).getHandle().getObjective(name).setNumberFormat(BlankFormat.INSTANCE);
         }
 
         int scoreNumber = text.size();
@@ -51,7 +51,7 @@ public abstract class ScoreboardHelper {
         Objective objective = scoreboard.registerNewObjective(name, Criteria.DUMMY, title);
 
         if(blankNumberFormat) {
-            ((CraftScoreboard)scoreboard).getHandle().a(name).b(BlankFormat.a);
+            ((CraftScoreboard)scoreboard).getHandle().getObjective(name).setNumberFormat(BlankFormat.INSTANCE);
         }
 
         int scoreNumber = text.size();
