@@ -5,12 +5,12 @@ plugins {
 }
 
 group = 'at.justacasualday'
-version = '1.0'
+version = '1.0-SNAPSHOT'
 
 ext {
     nexusUrl = env.fetch("NEXUS_URL")
 
-    publishRepository = "$nexusUrl/maven-releases"
+    publishRepository = "$nexusUrl/maven-snapshots"
 }
 
 repositories {
@@ -19,7 +19,6 @@ repositories {
     maven {
         name = "spigotmc-repo"
         url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
-
     }
 }
 
@@ -50,6 +49,16 @@ tasks.withType(Javadoc) {
     options.addStringOption('Xdoclint:none', '-quiet') // Disables strict doc checks
 }
 
+task sourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar) {
+    archiveClassifier.set('javadoc')
+    from tasks.javadoc
+}
+
 processResources {
     def props = [version: version]
     inputs.properties props
@@ -72,7 +81,8 @@ publishing {
             }
 
             from components.java
-
+            artifact tasks.javadocJar
+            artifact tasks.sourcesJar
         }
     }
     repositories {
@@ -80,7 +90,6 @@ publishing {
         maven {
             url publishRepository
 
-            allowInsecureProtocol = true
             credentials {
                 username = env.fetch("NEXUS_USERNAME")
                 password = env.fetch("NEXUS_PASSWORD")
