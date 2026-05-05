@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 /**
  * Creates a JSON Config using Gson
+ * Loads automatically from File on created
  * @param <T> ObjectType to store
  */
 public class JSONConfig<T> {
